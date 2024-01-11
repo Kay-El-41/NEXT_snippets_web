@@ -1,4 +1,6 @@
-export default function Home() {
+import React from "react";
+
+const SnippetCreatePage = () => {
   return (
     <form>
       <h3 className="font-bold m-3">Create a Snippet</h3>
@@ -19,12 +21,18 @@ export default function Home() {
             Code
           </label>
           <textarea
-            name="title"
-            id="title"
+            name="code"
+            id="code"
             className="border rounded p-2 w-full"
           />
         </div>
+
+        <button type="submit" className="rounded p-2 bg-blue-200">
+          Create
+        </button>
       </div>
     </form>
   );
-}
+};
+
+export default SnippetCreatePage;
