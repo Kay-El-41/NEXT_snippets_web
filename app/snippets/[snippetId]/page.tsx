@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { db } from "@/app/db";
 import React from "react";
+import Link from "next/link";
 
 type ViewSnippetProps = {
   params: {
@@ -21,5 +22,12 @@ export default async function ViewSnippet(props: ViewSnippetProps) {
 
   if (!snippet) return notFound();
 
-  return <div>{snippet.title}</div>;
+  return (
+    <main>
+      <Link href={"/"} className="flex items-center gap-1 my-10">
+        <span> {"<"} </span>
+        <span className=" text-xl font-semibold">{snippet.title}</span>
+      </Link>
+    </main>
+  );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { db } from "@/app/db";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const SnippetCreatePage = () => {
   async function createSnippet(formData: FormData) {
@@ -18,14 +19,16 @@ const SnippetCreatePage = () => {
         code,
       },
     });
-    console.log(snippet);
     // Redirect the user back to the root route
     redirect("/");
   }
 
   return (
     <form action={createSnippet}>
-      <h3 className="font-bold m-3">Create a Snippet</h3>
+      <Link href={"/"} className="flex items-center gap-1 my-10">
+        <span> {"<"} </span>
+        <span className=" text-xl font-semibold">Create New Snippet</span>
+      </Link>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col">
           <label htmlFor="code" className="w-12">
@@ -47,11 +50,15 @@ const SnippetCreatePage = () => {
             required
             id="code"
             name="code"
-            className="border rounded p-2 w-full"
+            rows={10}
+            className="border rounded p-2 w-full resize-none"
           />
         </div>
 
-        <button type="submit" className="rounded p-2 bg-blue-200">
+        <button
+          type="submit"
+          className="rounded-md w-1/4 mx-auto p-2 border text-white bg-slate-600 hover:shadow-md active:shadow-inner active:translate-y-[1px] transition"
+        >
           Create
         </button>
       </div>
