@@ -3,6 +3,7 @@ import { db } from "@/app/db";
 import React from "react";
 import Link from "next/link";
 import Code from "@/src/components/Code";
+import * as actions from "@/src/actions";
 
 export type ViewSnippetProps = {
   params: {
@@ -21,6 +22,11 @@ export default async function ViewSnippet(props: ViewSnippetProps) {
     where: { id: parseInt(props.params.snippetId) },
   });
 
+  const handleDeleteSnippet = actions.deleteSnippet.bind(
+    null,
+    parseInt(props.params.snippetId)
+  );
+
   if (!snippet) return notFound();
 
   return (
@@ -37,9 +43,11 @@ export default async function ViewSnippet(props: ViewSnippetProps) {
           >
             Edit
           </Link>
-          <button className="border px-3 py-1 rounded-md hover:border-slate-600 transition-colors">
-            Delete
-          </button>
+          <form action={handleDeleteSnippet}>
+            <button className="border px-3 py-1 rounded-md hover:border-slate-600 transition-colors">
+              Delete
+            </button>
+          </form>
         </div>
       </div>
       <Code code={snippet.code} />
