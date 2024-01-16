@@ -39,7 +39,9 @@ const SnippetCreatePage = () => {
           />
         </div>
 
-        <p>{formState.message}</p>
+        {formState?.message && (
+          <p className="text-red-500 text-sm">{formState.message}</p>
+        )}
 
         <button
           type="submit"
