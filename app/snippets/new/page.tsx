@@ -1,30 +1,16 @@
+"use client";
 import React from "react";
-import { db } from "@/app/db";
-import { redirect } from "next/navigation";
 import Link from "next/link";
+import * as actions from "@/src/actions";
+import { useFormState } from "react-dom";
 
 const SnippetCreatePage = () => {
-  async function createSnippet(formData: FormData) {
-    // Ths needs to be a server action!
-    "use server";
-    //? "use server" is a NEXT directive that this will use the server
-
-    // Check the user's input and make sure they are valid
-    const title = formData.get("title") as string;
-    const code = formData.get("code") as string;
-    // Create a new record in a database
-    const snippet = await db.snippet.create({
-      data: {
-        title,
-        code,
-      },
-    });
-    // Redirect the user back to the root route
-    redirect("/");
-  }
+  const [formState, action] = useFormState(actions.createSnippet, {
+    message: "",
+  });
 
   return (
-    <form action={createSnippet}>
+    <form action={action}>
       <Link href={"/"} className="flex items-center gap-1 my-10">
         <span> {"<"} </span>
         <span className=" text-xl font-semibold">Create New Snippet</span>
@@ -35,7 +21,6 @@ const SnippetCreatePage = () => {
             Title
           </label>
           <input
-            required
             id="title"
             type="text"
             name="title"
@@ -47,13 +32,14 @@ const SnippetCreatePage = () => {
             Code
           </label>
           <textarea
-            required
             id="code"
             name="code"
             rows={10}
             className="border rounded p-2 w-full resize-none"
           />
         </div>
+
+        <p>{formState.message}</p>
 
         <button
           type="submit"

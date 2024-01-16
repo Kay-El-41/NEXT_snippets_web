@@ -1,4 +1,5 @@
 "use server";
+//? "use server" is a NEXT directive that this will use the server
 
 import { db } from "@/app/db";
 import { redirect } from "next/navigation";
@@ -16,4 +17,22 @@ export async function deleteSnippet(id: number) {
     where: { id },
   });
   redirect(`/`);
+}
+
+export async function createSnippet(
+  formState: { message: string },
+  formData: FormData
+) {
+  return {
+    message: "Title must be longer",
+  };
+  // const title = formData.get("title") as string;
+  // const code = formData.get("code") as string;
+  // const snippet = await db.snippet.create({
+  //   data: {
+  //     title,
+  //     code,
+  //   },
+  // });
+  // redirect("/");
 }
