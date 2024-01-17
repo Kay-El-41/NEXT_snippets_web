@@ -2,6 +2,7 @@
 //? "use server" is a NEXT directive that this will use the server
 
 import { db } from "@/app/db";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function updateSnippet(id: number, code: string) {
@@ -16,6 +17,7 @@ export async function deleteSnippet(id: number) {
   await db.snippet.delete({
     where: { id },
   });
+  revalidatePath("/");
   redirect(`/`);
 }
 
@@ -49,5 +51,6 @@ export async function createSnippet(
       return { message: "Something went wrong" };
     }
   }
+  revalidatePath("/");
   redirect("/");
 }
